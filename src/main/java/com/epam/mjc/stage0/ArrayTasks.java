@@ -104,7 +104,7 @@ public class ArrayTasks
                 positives[++currentLastIndex] = i;
             }
         optimized = new int[currentLastIndex + 1];
-        System.arraycopy(positives, 0, optimized, 0, currentLastIndex);
+        System.arraycopy(positives, 0, optimized, 0, optimized.length);
         return optimized;
     }
 
