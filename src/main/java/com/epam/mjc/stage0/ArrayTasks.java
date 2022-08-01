@@ -5,13 +5,15 @@ package com.epam.mjc.stage0;
  * <p>
  * The usage of any additional packages (such as java.util.*) is forbidden.
  */
-public class ArrayTasks {
+public class ArrayTasks
+{
 
     /**
      * Return a String[] array that will list all the seasons of the year, starting with winter.
      */
-    public String[] seasonsArray() {
-
+    public String[] seasonsArray()
+    {
+        return new String[]{"Winter", "Spring", "Summer", "Autumn"};
     }
 
     /**
@@ -24,8 +26,12 @@ public class ArrayTasks {
      * length = 3  -> [1, 2, 3]
      * length = 5  -> [1, 2, 3, 4, 5]
      */
-    public int[] generateNumbers(int length) {
-
+    public int[] generateNumbers(int length)
+    {
+        int[] range = new int[length];
+        for (int i = 0; i < length; i++)
+            range[i] = i + 1;
+        return range;
     }
 
     /**
@@ -36,8 +42,11 @@ public class ArrayTasks {
      * arr = [1, 3, 5]   -> sum = 9
      * arr = [5, -3, -4] -> sum = -2
      */
-    public int totalSum(int[] arr) {
-
+    public int totalSum(int[] arr)
+    {
+        int sum= 0;
+        for (int j : arr) sum += j;
+        return sum;
     }
 
     /**
@@ -49,8 +58,12 @@ public class ArrayTasks {
      * arr = [99, -7, 102], number = -7    ->   2
      * arr = [5, -3, -4],   number = 10    ->  -1
      */
-    public int findIndexOfNumber(int[] arr, int number) {
-
+    public int findIndexOfNumber(int[] arr, int number)
+    {
+        for (int i = 0; i < arr.length; i++)
+            if(arr[i] == number)
+                return i;
+        return -1;
     }
 
     /**
@@ -62,8 +75,12 @@ public class ArrayTasks {
      * arr = ["Bob", "Nick"]               -> ["Nick", "Bob"]
      * arr = ["pineapple", "apple", "pen"] -> ["pen", "apple", "pineapple"]
      */
-    public String[] reverseArray(String[] arr) {
-
+    public String[] reverseArray(String[] arr)
+    {
+        String[] reversed = new String[arr.length];
+        for (int i = 0; i < arr.length; i++)
+            reversed[i] = arr[arr.length - i - 1];
+        return reversed;
     }
 
     /**
@@ -77,8 +94,18 @@ public class ArrayTasks {
      * arr = [-1, -2, -3]   -> []
      * arr = [1, 2]         -> [1, 2]
      */
-    public int[] getOnlyPositiveNumbers(int[] arr) {
-
+    public int[] getOnlyPositiveNumbers(int[] arr)
+    {
+        int[] positives = new int[arr.length], optimized;
+        int currentLastIndex = -1;
+        for(int i : arr)
+            if(i > 0)
+            {
+                positives[++currentLastIndex] = i;
+            }
+        optimized = new int[currentLastIndex + 1];
+        System.arraycopy(positives, 0, optimized, 0, currentLastIndex);
+        return optimized;
     }
 
     /**
@@ -91,7 +118,49 @@ public class ArrayTasks {
      * arr = [[3, 1, 2,], [3,2]] -> [[2, 3], [1, 2, 3]]
      * arr = [[5, 4], [7]]       -> [[7], [4, 5]]
      */
-    public int[][] sortRaggedArray(int[][] arr) {
+    public int[][] sortRaggedArray(int[][] arr)
+    {
+        boolean isChanged;
+        //Sorting arrays by length
+        int[] tempArr;
+        for(int j = 0; j < arr.length; j++)
+        {
+            isChanged = false;
+            for (int i = 1; i < arr.length; i++)
+            {
+                if (arr[i - 1].length > arr[i].length)
+                {
+                    isChanged = true;
+                    tempArr = arr[i - 1].clone();
+                    arr[i - 1] = arr[i].clone();
+                    arr[i] = tempArr.clone();
+                }
+            }
+            if(!isChanged)
+                break;
+        }
 
+        //Sorting array contents
+        int tempInt;
+        for(int[] i : arr)
+        {
+            isChanged = false;
+            for (int k = 1; k < i.length; k++)
+            {
+                for (int j = 1; j < i.length; j++)
+                {
+                    if(i[j - 1] > i[j])
+                    {
+                        isChanged = true;
+                        tempInt = i[j];
+                        i[j] = i[j - 1];
+                        i[j - 1] = tempInt;
+                    }
+                }
+                if(!isChanged)
+                    break;
+            }
+        }
+        return arr;
     }
 }
